@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const router = new Router();
 
-router.post('/login', async (ctx) => {
+router.post('/login', isAuthorized, async (ctx) => {
   const { email, password } = ctx.request.body;
   let data = await fetch('http://localhost:5000/DB.json');
   data = await data.json();
@@ -31,6 +31,8 @@ router.post('/login', async (ctx) => {
         method: 'POST',
         body: { email }
       });
+      token = await token.json();
+      ctx.cookies.set('authtoken', token);
       ctx.status = 200;
       ctx.body = {
         "status": "success",
@@ -44,8 +46,31 @@ router.post('/jwt', async (ctx) => {
   const { email } = ctx.request.body;
   let privateKey = fs.readFileSync('./private.pem', 'utf8');
   let token = jwt.sign({ email }, privateKey, { algorithm: "HS256" });
-  console.log(token);
-  ctx.body = token;
+  ctx.body = JSON.stringify(token);
 });
+
+router.get('/protected', isAuthorized, async (ctx) => {
+  ctx.body = "super secret route";
+});
+
+function isAuthorized(ctx, next) {
+  const authToken = ctx.cookies.get('authtoken');
+  if (typeof authToken !== 'undefined') {
+    let privateKey = fs.readFileSync('./private.pem', 'utf8');
+
+    jwt.verify(authToken, privateKey, { algorithm: "HS256" }, async (err, decoded) => {
+      if (err) {
+        ctx.status = 500;
+        ctx.body = { "error": "Not Authorized" };
+      }
+      console.log(decoded);
+
+      return await next();
+    });
+  } else {
+    ctx.status = 500;
+    ctx.body = { "error": "Not Authorized" };
+  }
+}
 
 module.exports = router;
