@@ -3,28 +3,28 @@
     "id": "1",
     "email": "lia@lia.com",
     "username": "lia",
-    "password": "secret",
+    "password": "$2b$10$l8c4CAfPddleiS4Zcp7TUOZ95U7UCs6tTgSCwazzDZtPqY.4bJ2Na",
     "role": "0"
   },
   {
     "id": "2",
     "email": "ron@lia.com",
     "username": "ron",
-    "password": "secret",
+    "password": "$2b$10$ctOT/F4Fp/3WAyh8xQAAAeaKxiGUja9NDezfw83fnYgTCMHxBtBBi",
     "role": "1"
   },
   {
     "id": "3",
     "email": "octo@lia.com",
     "username": "octo",
-    "password": "secret",
+    "password": "$2b$10$Uy96F0LOFOsx615rj8BJuesfFpYQXhEqt90eB/ZiyDyIj3tcv2F9a",
     "role": "2"
   },
   {
     "id": "4",
     "email": "yota@lia.com",
     "username": "yota",
-    "password": "secret",
+    "password": "$2b$10$83MqS4.ZypwSp/0aXxYtXeFavu5bnq6izrkk1HOBit0qQTJtEpPaa",
     "role": "2"
   }
 ]

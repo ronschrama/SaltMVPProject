@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const router = new Router();
 
@@ -19,7 +20,8 @@ router.post('/login', async (ctx) => {
       "message": "Incorrect email address"
     };
   } else {
-    if (user.password !== password) {
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) {
       ctx.status = 403;
       ctx.body = {
         "status": "error",
