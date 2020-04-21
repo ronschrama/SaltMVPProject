@@ -1,6 +1,8 @@
 const Router = require('koa-router');
 const validator = require('validator');
 const fetch = require('node-fetch');
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
 
 const router = new Router();
 
@@ -31,6 +33,12 @@ router.post('/login', async (ctx) => {
       };
     }
   }
+});
+
+router.get('/jwt', async (ctx) => {
+  let privateKey = fs.readFileSync('./private.pem', 'utf8');
+  let token = jwt.sign({ "email": "email" }, privateKey, { algorithm: "HS256" });
+  ctx.body = token;
 });
 
 module.exports = router;

@@ -3,18 +3,28 @@
     "id": "1",
     "email": "lia@lia.com",
     "username": "lia",
-    "password": "secret"
+    "password": "secret",
+    "role": "0"
   },
   {
     "id": "2",
     "email": "ron@lia.com",
     "username": "ron",
-    "password": "secret"
+    "password": "secret",
+    "role": "1"
   },
   {
     "id": "3",
     "email": "octo@lia.com",
     "username": "octo",
-    "password": "secret"
+    "password": "secret",
+    "role": "2"
+  },
+  {
+    "id": "4",
+    "email": "yota@lia.com",
+    "username": "yota",
+    "password": "secret",
+    "role": "2"
   }
 ]
