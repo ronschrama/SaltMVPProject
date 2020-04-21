@@ -1,12 +1,11 @@
 const Router = require('koa-router');
-const validator = require('validator');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 
 const router = new Router();
 
-router.post('/login', isAuthorized, async (ctx) => {
+router.post('/login', async (ctx) => {
   const { email, password } = ctx.request.body;
   let data = await fetch('http://localhost:5000/DB.json');
   data = await data.json();
@@ -42,6 +41,15 @@ router.post('/login', isAuthorized, async (ctx) => {
   }
 });
 
+router.get('/logout', async (ctx) => {
+  ctx.cookies.set('authtoken', null);
+  ctx.status = 200;
+  ctx.body = {
+    "status": "success",
+    "message": "Logged out"
+  }
+});
+
 router.post('/jwt', async (ctx) => {
   const { email } = ctx.request.body;
   let privateKey = fs.readFileSync('./private.pem', 'utf8');
@@ -50,7 +58,7 @@ router.post('/jwt', async (ctx) => {
 });
 
 router.get('/protected', isAuthorized, async (ctx) => {
-  ctx.body = "super secret route";
+  ctx.body = "Super secret testing route. :)";
 });
 
 function isAuthorized(ctx, next) {
