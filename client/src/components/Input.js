@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Input() {
+function Input({ children }) {
   return (
-    <input></input>
+    <input placeholder={children}></input>
   )
 }
 

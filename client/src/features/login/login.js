@@ -4,6 +4,7 @@ import { loggingIn } from './loginSlice';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import CheckBox from '../../components/CheckBox';
+import Link from '../../components/Link';
 
 function Login() {
   const dispatch = useDispatch();
@@ -12,11 +13,17 @@ function Login() {
   );
   console.log(loginStatus);
   return (
-    <div onClick={() => dispatch(loggingIn())}>
-      <Input />
-      <Input />
-      <CheckBox />
-      <Button />
+    <div className="LoginForm">
+      <h2>Welcome! Please login to your account</h2>
+      <div onClick={() => dispatch(loggingIn())}>
+        <form >
+          <Input>Email adress</Input>
+          <Input>Password</Input>
+          <CheckBox>Remember me</CheckBox>
+          <Link>Forgot Password</Link>
+          <Button primary>Login</Button>
+        </form>
+      </div>
     </div>
   );
 }
