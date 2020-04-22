@@ -6,8 +6,7 @@ function App() {
   return (
     <div className="App">
       <h1>Promore app</h1>
-      <Login primary>Login</Login>
-      <Login secondary>Button twee</Login>
+      <Login />
     </div>
   );
 }
