@@ -5,16 +5,17 @@ const login = createSlice({
   name: 'login',
   initialState: {
     loggedIn: false,
-    userType: null
+    userType: null,
   },
   reducers: {
-    loggingIn: state => {
+    loggingIn: (state) => {
       state.loggedIn = true;
-    }
-  }
+    },
+  },
 });
 
 export const {
-  loggingIn
-} = login.actions
-export default login.reducer
+  loggingIn,
+} = login.actions;
+
+export default login.reducer;
