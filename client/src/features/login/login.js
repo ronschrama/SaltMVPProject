@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loggingIn } from './loginSlice';
 import Button from '../../components/Button';
@@ -12,13 +12,22 @@ function Login() {
     state => state.login.loggedIn
   );
   console.log(loginStatus);
+
+  const [ input, setInput ] = useState([]);
+
+  function getUserCredentials (e) {
+    const value = e.target.value;
+    setInput([...input, value]);
+    console.log(value);
+  }
+
   return (
     <div className="LoginForm">
       <h2>Welcome! Please login to your account</h2>
       <div onClick={() => dispatch(loggingIn())}>
-        <form >
-          <Input>Email adress</Input>
-          <Input>Password</Input>
+        <form onSubmit={() => getUserCredentials()}>
+          <Input value={input}>Email adress</Input>
+          <Input value={input}>Password</Input>
           <CheckBox>Remember me</CheckBox>
           <Link>Forgot Password</Link>
           <Button primary>Login</Button>
@@ -28,4 +37,4 @@ function Login() {
   );
 }
 
-export default Login
+export default Login;
