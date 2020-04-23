@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './redux/store';
 import getSession from './features/login/session';
+import Login from './features/login/login';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,6 +26,9 @@ ReactDOM.render(
                 <Redirect to='/login' />
               )
           )} />
+          <Route path='/login'>
+            <Login />
+          </Route>
         </Switch>
       </Router>
       {/* <App /> */}

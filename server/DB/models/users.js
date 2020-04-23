@@ -6,12 +6,9 @@
 // -----------------------------------------------------------------------------
 // Dependencies
 // -----------------------------------------------------------------------------
-const fs = require('fs');
-const uuid = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt-nodejs');
-const jwt = require('jsonwebtoken');
-const log = require('../../utils/logger')('Accounts');
-
+const log = require('../../utils/logger')('Users');
 const database = require('../connectors/postgres');
 
 // -----------------------------------------------------------------------------
@@ -28,8 +25,8 @@ Model.init = async () => {
   const queryUserTable = {
     text: `
       CREATE TABLE IF NOT EXISTS Users (
-        "usid" TEXT PRIMARY KEY NOT NULL,
-        "email" VARCHAR (255) UNIQUE,
+        "uuid" TEXT PRIMARY KEY NOT NULL,
+        "email" TEXT NOT NULL UNIQUE,
         "createAt" TIMESTAMP NOT NULL,
         "updatedAt" TIMESTAMP NOT NULL
       )
@@ -45,7 +42,7 @@ Model.init = async () => {
   const queryPasswordTable = {
     text: `
     CREATE TABLE IF NOT EXISTS UserPasswords (
-      "usid" PRIMARY KEY REFERENCES Users ("usid") ON DELETE CASCADE,
+      "uuid" PRIMARY KEY REFERENCES Users ("uuid") ON DELETE CASCADE,
       "passhash" TEXT NOT NULL,
       "createAt" TIMESTAMP NOT NULL,
       "updatedAt" TIMESTAMP NOT NULL
@@ -61,30 +58,19 @@ Model.init = async () => {
 };
 
 Model.create = async ({ email, password } = {}) => {
-  const usid = uuid;
-
-  if ((!email && password) || (email && !password)) {
-    return {
-      error: {
-        message: 'You must enter both a valid email and a valid password',
-        code: `400${Model.errorLevel}00`,
-      },
-    };
-  }
-
 
   const queryUsers = {
     text: `
     INSERT INTO Users 
     (
-      "usid",
+      "uuid",
        "email", 
        "createdAt",
         "updatedAt"
     ) 
     VALUES 
     (
-      :usid,
+      :uuid,
        :email, 
        LOCALTIMESTAMP, 
        LOCALTIMESTAMP
@@ -92,7 +78,7 @@ Model.create = async ({ email, password } = {}) => {
     RETURNING *
     `,
     values: {
-      usid,
+      uuid,
       email,
     },
   };
@@ -105,13 +91,13 @@ Model.create = async ({ email, password } = {}) => {
       text: `
       INSERT INTO UserPasswords
       (
-        "usid",
+        "uuid",
         "passhash",
         "createdAt",
         "updatedAt"
       )
       VALUES (
-        :usid,
+        :uuid,
         :passhash,
         LOCALTIMESTAMP,
         LOCALTIMESTAMP
@@ -119,7 +105,7 @@ Model.create = async ({ email, password } = {}) => {
       RETURNING *
       `,
       values: {
-        usid,
+        uuid,
         passhash: bcrypt.hashSync(password, bcrypt.genSaltSync()),
       },
     };
@@ -130,14 +116,22 @@ Model.create = async ({ email, password } = {}) => {
 
   return {
     data: createdUsers.data.map((user) => {
-      const message = `User ${user.usid} was created: ${user.email}`;
+      const message = `User ${user.uuid} was created: ${user.email}`;
 
       log.info(message);
     }),
   };
 };
 
-Model.get = ({ email, password } = {}) => {
+Model.getUser = ({ email, password } = {}) => {
+  if (!email || !password) {
+    return {
+      error: {
+        message: 'You must enter both a valid email and a valid password',
+        code: `400${Model.errorLevel}00`,
+      },
+    };
+  }
   const query = {
     text: `
     SELECT * FROM Users WHERE TRUE
@@ -152,7 +146,7 @@ Model.get = ({ email, password } = {}) => {
   return database.query(query);
 };
 
-Model.delete = async (usid) => {
+Model.delete = async (uuid) => {
   const query = {
     text: `
       DELETE
@@ -161,7 +155,7 @@ Model.delete = async (usid) => {
       RETURNING *
     `,
     values: {
-      usid,
+      uuid,
     },
   };
   const accountRemoved = await database.query(query);
@@ -173,22 +167,4 @@ Model.delete = async (usid) => {
   }
 
   return accountRemoved;
-};
-
-Model.getJwtPubKey = () => {
-  const pubKey = fs.readFileSync(`${__dirname}/jwt.pub`, 'utf8');
-  if (pubKey.error) {
-    log.error(pubKey);
-    return { error: { message: 'Unable to fetch pubKey', code: `500${Model.errorLevel}00` } };
-  }
-  return { data: pubKey };
-};
-
-Model.getJwtPrivateKey = () => {
-  const pubKey = fs.readFileSync(`${__dirname}/jwt.key`, 'utf8');
-  if (pubKey.error) {
-    log.error(pubKey);
-    return { error: { message: 'Unable to fetch key', code: `500${Model.errorLevel}02` } };
-  }
-  return { data: pubKey };
 };

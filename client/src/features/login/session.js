@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 export const getSession = () => {
-  const jwt = Cookies.get('__session')
+  const jwt = Cookies.get('authToken')
   let session
   try {
     if (jwt) {
@@ -15,5 +15,7 @@ export const getSession = () => {
   return session
 }
 export const logOut = () => {
-  Cookies.remove('__session')
+  Cookies.remove('authToken')
 }
+
+export default getSession;
