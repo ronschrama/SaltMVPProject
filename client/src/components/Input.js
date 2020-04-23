@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { propTypes } from 'react';
 
-function Input({ children }) {
+function Input({ name, handleChange, type }) {
   return (
-    <input placeholder={children}></input>
-  )
+    <input
+      placeholder={name}
+      onChange={(e) => handleChange(e.target.value)}
+      type={type}
+    />
+  );
 }
 
-export default Input
+Input.propTypes = {
+  
+};
+export default Input;

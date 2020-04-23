@@ -1,44 +1,36 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loggingIn } from './loginSlice';
-import Button from '../../components/Button';
+import SubmitButton from '../../components/SubmitButton';
 import Input from '../../components/Input';
 import CheckBox from '../../components/CheckBox';
-import Link from '../../components/Link';
 
 function Login() {
   const dispatch = useDispatch();
   const loginStatus = useSelector(
     (state) => state.login.loggedIn,
   );
-  console.log(loginStatus);
 
-  const [userInput, setUserInput] = useState({ email: '', password: '' });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  function getUserCredentials(e) {
-    e.preventDefault();
-    // const refEl = useRef(null);
-    const { value } = e.target;
-    setUserInput({
-      ...userInput,
-      [e.target.user]: value,
-    });
+  async function handleSubmit() {
+    // const result = await fetch()
+    // const token = await result.json();
+    console.log(email, password);
   }
-  console.log(userInput);
 
   return (
-    <div className="LoginForm">
-      <h2>Welcome! Please login to your account</h2>
-      <div onClick={() => dispatch(loggingIn())}>
-        <form onSubmit={getUserCredentials}>
-          <Input value={userInput.email} user="email">Email adress</Input>
-          <Input value={userInput.password} user="password">Password</Input>
-          <CheckBox>Remember me</CheckBox>
-          <Link href=" ">Forgot Password</Link>
-          <Button>Login</Button>
-        </form>
-      </div>
-    </div>
+    <form onSubmit={async (e) => {
+      e.preventDefault();
+      await handleSubmit();
+    }}
+    >
+      <Input handleChange={(mail) => setEmail(mail)} name="email" type="text" />
+      <Input handleChange={(pass) => setPassword(pass)} name="password" type="text" />
+      <CheckBox />
+      <SubmitButton />
+    </form>
   );
 }
 

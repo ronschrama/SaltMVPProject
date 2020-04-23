@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Login from './features/login/login'
+import Login from './features/login/login';
 import Link from './components/Link';
 
 function App() {
@@ -8,8 +8,8 @@ function App() {
     <div className="App">
       <h1>Promore app</h1>
       <Login />
-      <Link>Term of use</Link>
-      <Link>Privacy policy</Link>
+      <Link href="/">Term of use</Link>
+      <Link href="/">Privacy policy</Link>
     </div>
   );
 }
