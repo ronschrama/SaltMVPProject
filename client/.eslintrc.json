@@ -11,6 +11,16 @@
     "ecmaVersion": 2018
   },
   "extends": [
-    "airbnb-base"
-  ]
+    "airbnb"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [
+          ".js"
+        ]
+      }
+    ]
+  }
 }
