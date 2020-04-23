@@ -4,7 +4,7 @@ function CheckBox({ children }) {
   return (
     <div>
       <input id="check" type="checkbox" />
-      <label for="check">{children}</label>
+      <label htmlFor="check">{children}</label>
     </div>
   )
 }

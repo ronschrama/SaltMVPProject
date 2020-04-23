@@ -1,4 +1,4 @@
-import React, { propTypes } from 'react';
+import React from 'react';
 
 function Input({ name, handleChange, type }) {
   return (
@@ -10,7 +10,4 @@ function Input({ name, handleChange, type }) {
   );
 }
 
-Input.propTypes = {
-  
-};
 export default Input;

@@ -15,9 +15,22 @@ function Login() {
   const [password, setPassword] = useState('');
 
   async function handleSubmit() {
-    // const result = await fetch()
+    const result = await fetch('http://localhost:5000/login', {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        return response;
+      });
     // const token = await result.json();
-    console.log(email, password);
+    await console.log(email, password, result);
   }
 
   return (
