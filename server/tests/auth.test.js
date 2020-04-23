@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const { app } = require('./server');
+const { app } = require('../server');
 
 describe('User API', () => {
   const testUser = {
