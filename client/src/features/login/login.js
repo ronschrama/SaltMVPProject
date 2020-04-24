@@ -2,10 +2,18 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { loggingIn } from './loginSlice';
-import SubmitButton from '../../components/SubmitButton';
+import styled from 'styled-components';
+
+import SubmitButton from '../../components/Button';
 import Input from '../../components/Input';
 import CheckBox from '../../components/CheckBox';
 import auth from '../../services/auth';
+
+const LoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`
 
 function Login(props) {
   const dispatch = useDispatch();
@@ -39,16 +47,15 @@ function Login(props) {
   }
 
   return (
-    <form onSubmit={async (e) => {
+    <LoginForm onSubmit={async (e) => {
       e.preventDefault();
       await handleSubmit();
-    }}
-    >
-      <Input handleChange={(mail) => setEmail(mail)} name="email" type="text" />
-      <Input handleChange={(pass) => setPassword(pass)} name="password" type="text" />
-      <CheckBox />
-      <SubmitButton />
-    </form>
+    }}>
+      <Input login handleChange={(mail) => setEmail(mail)} name="email" type="text" />
+      <Input login handleChange={(pass) => setPassword(pass)} name="password" type="password" />
+      <CheckBox>Remember password</CheckBox>
+      <SubmitButton login>Login</SubmitButton>
+    </LoginForm>
   );
 }
 
@@ -114,3 +121,21 @@ export default withRouter(Login);
 // }
 
 // export default withRouter(Login);
+
+
+// PRE STYLED-COMPONENT
+
+// return (
+//   <LoginForm>
+//     <form onSubmit={async (e) => {
+//       e.preventDefault();
+//       await handleSubmit();
+//     }}
+//     >
+//       <Input login handleChange={(mail) => setEmail(mail)} name="email" type="text" />
+//       <Input login handleChange={(pass) => setPassword(pass)} name="password" type="password" />
+//       <CheckBox>Remember password</CheckBox>
+//       <SubmitButton login>Login</SubmitButton>
+//     </form>
+//   </LoginForm>
+// );

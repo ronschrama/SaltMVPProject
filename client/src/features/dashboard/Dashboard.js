@@ -1,9 +1,14 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 import { withRouter } from 'react-router-dom';
-import SubmitButton from '../../components/SubmitButton';
+import SubmitButton from '../../components/Button';
 import auth from '../../services/auth';
+import styled from 'styled-components';
 
+const Heading = styled.h2`
+  font-size: ${props => props.theme.fonts.h2};
+  color: #B9BABE;
+`
 
 function Dashboard(props) {
   function handleSubmit() {
@@ -18,7 +23,7 @@ function Dashboard(props) {
 
   return (
     <div>
-      <h1>Dashboard</h1>
+      <Heading>Dashboard</Heading>
       <form
         onSubmit={
           (e) => {
@@ -27,7 +32,7 @@ function Dashboard(props) {
           }
         }
       >
-        <SubmitButton />
+        <SubmitButton login>Logout</SubmitButton>
       </form>
     </div>
   );

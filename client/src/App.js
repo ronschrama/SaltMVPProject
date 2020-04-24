@@ -8,7 +8,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   return (
     <div className="App">
-      <h1>Promore app</h1>
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />
