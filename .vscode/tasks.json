@@ -1,0 +1,86 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "windows": {
+    "options": {
+      "shell": {
+        "executable": "cmd.exe",
+        "args": [
+          "/d",
+          "/c"
+        ]
+      }
+    }
+  },
+  "tasks": [
+    {
+      "label": "[PRODUCTION] Deploy service",
+      "group": "build",
+      "type": "shell",
+      "command": "docker-compose --project-name %PROJECT_NAME% -f ${workspaceFolder}/docker-compose.yml -f ${workspaceFolder}/docker-compose-prod.yml up --build -d ${input:serviceToDeploy}",
+      "options": {
+        "env": {
+          "DOCKER_TLS_VERIFY": "1",
+          "DOCKER_HOST": "tcp://64.225.19.230:2376",
+          "DOCKER_CERT_PATH": "/Users/panayotachatzi/.docker/machine/machines/salt.promoresolution.com",
+          "DOCKER_MACHINE_NAME": "salt.promoresolution.com",
+          "COMPOSE_CONVERT_WINDOWS_PATHS": "true",
+          "PROJECT_NAME": "promore_api"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run service locally in the background",
+      "group": "build",
+      "type": "shell",
+      "command": "docker-compose --project-name %PROJECT_NAME% -f ${workspaceFolder}/docker-compose.yml -f ${workspaceFolder}/docker-compose-dev.yml up --build -d ${input:serviceToRunLocally}",
+      "options": {
+        "env": {
+          "PROJECT_NAME": "promore_api"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run service locally",
+      "group": "build",
+      "type": "shell",
+      "command": "docker-compose --project-name %PROJECT_NAME% -f ${workspaceFolder}/docker-compose.yml -f ${workspaceFolder}/docker-compose-dev.yml up --build ${input:serviceToRunLocally}",
+      "options": {
+        "env": {
+          "PROJECT_NAME": "promore_api"
+        }
+      },
+      "runOptions": {
+        "instanceLimit": 100
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "serviceToDeploy",
+      "type": "pickString",
+      "description": "Select service to deploy",
+      "options": [
+        "app",
+        "postgres",
+        "traefik"
+      ],
+      "default": "app"
+    },
+    {
+      "id": "serviceToRunLocally",
+      "type": "pickString",
+      "description": "Select service to run locally",
+      "options": [
+        "app",
+        "postgres",
+        "pgadmin"
+      ],
+      "default": "app"
+    }
+  ]
+}

@@ -1,15 +1,16 @@
 {
   "name": "promoresolution",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "index.js",
   "license": "MIT",
   "scripts": {
     "lint": "eslint .",
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node index.js",
+    "server": "nodemon index.js",
     "client": "cd ../client && yarn start",
-    "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "test": "mocha -w -u bdd -R spec ./*.test.js"
+    "devit": "concurrently \"yarn server\" \"yarn client\"",
+    "dev": "nodemon -L -e js,json,ejs,gql,ts --experimental-modules",
+    "test": "node test/index.js | faucet  || true"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
@@ -18,22 +19,30 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-mocha": "^6.3.0",
     "mocha": "^7.1.1",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2",
+    "validator": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=10.6.0"
   },
   "dependencies": {
     "@koa/cors": "2",
+    "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
     "koa-json": "^2.0.2",
+    "koa-jwt": "^3.6.0",
+    "koa-mount": "^4.0.0",
     "koa-router": "^8.0.8",
     "koa-static": "^5.0.0",
+    "loglevel": "^1.6.8",
     "node-fetch": "^2.6.0",
     "pg": "^8.0.2",
-    "should": "^13.2.3",
-    "supertest": "^4.0.2",
-    "validator": "^13.0.0"
+    "uuid": "^7.0.3"
   }
 }

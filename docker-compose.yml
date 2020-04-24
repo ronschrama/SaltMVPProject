@@ -1,0 +1,32 @@
+version: '3.7'
+
+# -----------------------------------------------------------------------------
+# Specify named volumes to use with containers
+# -----------------------------------------------------------------------------
+
+volumes:
+  postgres:
+
+services:
+  # -----------------------------------------------------------------------------
+  # Boilerplate Node.js app
+  # -----------------------------------------------------------------------------
+  app:
+    environment:
+      - NODE_ENV=production
+      - PGHOST=postgres
+      - PGUSER=salt
+      - PGPASSWORD=34rju340r8j34q79tj9t23tr4t6v5!@#S#@!44
+      - PGDATABASE=promore
+      - PGPORT=5432
+  # -----------------------------------------------------------------------------
+  # SQL database
+  # -----------------------------------------------------------------------------
+  postgres:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=salt
+      - POSTGRES_PASSWORD=34rju340r8j34q79tj9t23tr4t6v5!@#S#@!44
+    volumes:
+      - postgres:/var/lib/postgresql/data
+

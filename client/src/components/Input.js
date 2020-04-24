@@ -1,11 +1,26 @@
+// import React from 'react';
+
+// function Input({ name, type, forwardedRef }) {
+//   return (
+//     <input
+//       ref={forwardedRef}
+//       placeholder={name}
+//       type={type}
+//     />
+//   );
+// }
+
+// export default Input;
+
 import React from 'react';
 
-function Input({ name, handleChange, type }) {
+function Input(props) {
   return (
     <input
-      placeholder={name}
-      onChange={(e) => handleChange(e.target.value)}
-      type={type}
+      placeholder={props.name}
+      // ref={props.ref}
+      onChange={(e) => props.handleChange(e.target.value)}
+      type={props.type}
     />
   );
 }

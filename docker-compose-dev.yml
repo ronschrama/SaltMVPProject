@@ -1,0 +1,56 @@
+version: '3.7'
+
+# -----------------------------------------------------------------------------
+# Generate configs to use inside containers within Swarm
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# Generate secrets to use inside containers within Swarm
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# Specify named volumes to use with containers
+# -----------------------------------------------------------------------------
+
+volumes:
+  ignore:
+  pgadmin:
+
+# -----------------------------------------------------------------------------
+# Specify additional networks
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# Setup anchors and aliases
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# Specify all services to deploy
+# -----------------------------------------------------------------------------
+
+services:
+
+  app:
+    build:
+      context: ./app
+      target: development
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./app:/opt/app:delegated
+
+  postgres:
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "85:80"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=SuperSecretPasswrd

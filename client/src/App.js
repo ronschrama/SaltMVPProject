@@ -1,15 +1,19 @@
 import React from 'react';
 import './App.css';
-import Login from './features/login/login';
-import Link from './components/Link';
+import { Route, Switch } from 'react-router-dom';
+import LoginPage from './features/login/LoginPage';
+import Dashboard from './features/dashboard/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
     <div className="App">
       <h1>Promore app</h1>
-      <Login />
-      <Link href="/">Term of use</Link>
-      <Link href="/">Privacy policy</Link>
+      <Switch>
+        <Route exact path="/" component={LoginPage} />
+        <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+        <Route exact path="*" component={() => '404 NOT FOUND'} />
+      </Switch>
     </div>
   );
 }

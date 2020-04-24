@@ -1,0 +1,79 @@
+version: '3.7'
+
+# -----------------------------------------------------------------------------
+# Specify named volumes to use with containers
+# -----------------------------------------------------------------------------
+
+volumes:
+  ssl:
+
+# -----------------------------------------------------------------------------
+# Specify additional networks
+# -----------------------------------------------------------------------------
+
+networks:
+  stack:
+
+# -----------------------------------------------------------------------------
+# Setup anchors and aliases
+# -----------------------------------------------------------------------------
+
+x-add-local-logging: &add-local-logging
+  logging:
+    driver: json-file
+    options:
+      max-size: '10m'
+      max-file: '200'
+
+x-add-restart_policy: &add-restart_policy
+  restart_policy:
+    condition: on-failure
+    delay: 5s
+    max_attempts: 3
+    window: 10s
+
+x-add-stack-network: &add-stack-network
+  stack:
+
+# -----------------------------------------------------------------------------
+# Specify all services to deploy
+# -----------------------------------------------------------------------------
+
+services:
+
+  app:
+    build: 
+      context: ./app
+      target: production
+    environment:
+      - NODE_ENV=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=3000"
+      - "traefik.frontend.rule=Host:api.salt.promoresolution.com"
+      - "traefik.frontend.headers.customResponseHeaders=Access-Control-Allow-Origin:*||Access-Control-Allow-Methods:GET,POST,PUT,DELETE,OPTIONS||Access-Control-Allow-Headers:Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+    networks:
+      <<: *add-stack-network
+    <<: *add-local-logging
+
+  postgres:
+    # Do not do this on production folks) It is just for convinience, but opening ports like that is potential security hole
+    ports:
+      - "5432:5432"
+    networks:
+      <<: *add-stack-network
+    
+  
+  traefik:
+    build:
+      context: ./traefik
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: on-failure:3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ssl:/etc/traefik/acme
+    networks:
+      <<: *add-stack-network
+    <<: *add-local-logging

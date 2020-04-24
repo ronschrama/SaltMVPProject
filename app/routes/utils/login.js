@@ -2,7 +2,10 @@ const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
+// const log = require('../../utils/logger')();
 
+
+const errorLevel = 'RUS';
 
 function generateToken(user) {
   const { email } = user;
@@ -21,6 +24,7 @@ function generateToken(user) {
   return token;
 }
 
+
 function isAuthorized(ctx, next) {
   const authToken = ctx.cookies.get('authtoken');
 
@@ -29,17 +33,16 @@ function isAuthorized(ctx, next) {
 
     jwt.verify(authToken, cert, { algorithms: ['RS256'] }, async (err) => {
       if (err) {
-        ctx.status = 200;
-        ctx.body = { error: { code: '403RUS03', message: 'Not Authorized' } };
+        ctx.body = { error: { code: `403${errorLevel}03`, message: 'Not Authorized' } };
       }
 
       return next();
     });
   } else {
-    ctx.status = 200;
-    ctx.body = { error: { code: '403RUS04', message: 'Not Authorized' } };
+    ctx.body = { error: { code: `403${errorLevel}04`, message: 'Not Authorized' } };
   }
 }
+
 
 const login = async (ctx) => {
   const { email, password } = ctx.request.body;
@@ -49,19 +52,18 @@ const login = async (ctx) => {
 
 
   if (typeof user === 'undefined') {
-    ctx.status = 200;
-    ctx.body = { error: { code: '403RUS01', message: 'Incorrect email address' } };
+    ctx.body = { error: { code: `403${errorLevel}01`, message: 'Incorrect email address' } };
   } else {
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
-      ctx.status = 200;
-      ctx.body = { error: { code: '403RUS02', message: 'Incorrect password ' } };
+      ctx.body = { error: { code: `403${errorLevel}02`, message: 'Incorrect password ' } };
     } else {
       const token = generateToken(user);
 
+      ctx.set('authtoken', token);
       ctx.cookies.set('authtoken', token);
-      ctx.status = 200;
+
       ctx.body = { success: { code: 200, message: 'Logged in' } };
     }
   }
