@@ -8,7 +8,7 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "cd ../client && yarn start",
-    "devit": "concurrently \"yarn server\" \"yarn client\"",
+    "launch": "concurrently \"yarn server\" \"yarn client\"",
     "dev": "nodemon -L -e js,json,ejs,gql,ts --experimental-modules",
     "test": "node test/index.js | faucet  || true"
   },

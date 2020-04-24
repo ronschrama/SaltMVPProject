@@ -1,12 +1,11 @@
 /**
- *  Model for Accounts
+ *  Model for Users
  *
  */
-
 // -----------------------------------------------------------------------------
 // Dependencies
 // -----------------------------------------------------------------------------
-// const uuidv4 = require('uuid/v4');
+const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt-nodejs');
 const log = require('../../utils/logger')('Users');
 const database = require('../connectors/postgres');
@@ -78,7 +77,7 @@ Model.create = async ({ email, password } = {}) => {
     RETURNING *
     `,
     values: {
-      uuid,
+      uuid: uuidv4(),
       email,
     },
   };
@@ -86,9 +85,8 @@ Model.create = async ({ email, password } = {}) => {
   const createdUsers = await database.query(queryUsers);
   if (createdUsers.error) return createdUsers;
 
-  if (password) {
-    const queryPassword = {
-      text: `
+  const queryPassword = {
+    text: `
       INSERT INTO UserPasswords
       (
         "uuid",
@@ -104,15 +102,15 @@ Model.create = async ({ email, password } = {}) => {
       )
       RETURNING *
       `,
-      values: {
-        uuid,
-        passhash: bcrypt.hashSync(password, bcrypt.genSaltSync()),
-      },
-    };
+    values: {
+      uuid,
+      passhash: bcrypt.hashSync(password, bcrypt.genSaltSync()),
+    },
+  };
 
-    const createdPassword = await database.query(queryPassword);
-    if (createdPassword.error) return createdPassword;
-  }
+  const createdPassword = await database.query(queryPassword);
+  if (createdPassword.error) return createdPassword;
+
 
   return {
     data: createdUsers.data.map((user) => {
@@ -151,7 +149,7 @@ Model.delete = async (uuid) => {
     text: `
       DELETE
       FROM Users
-      WHERE "uid" = :uid
+      WHERE "uuid" = :uuid
       RETURNING *
     `,
     values: {
