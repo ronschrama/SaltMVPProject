@@ -1,13 +1,19 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 import { withRouter } from 'react-router-dom';
-import SubmitButton from '../../components/Button';
-import auth from '../../services/auth';
 import styled from 'styled-components';
 
-const Heading = styled.h2`
-  font-size: ${props => props.theme.fonts.h2};
-  color: #B9BABE;
+import { Layout } from 'antd';
+import MainMenu from '../Menu/Menu';
+import Header from '../Menu/Header';
+import SubmitButton from '../../components/Button';
+import auth from '../../services/auth';
+
+const { Content, Sider } = Layout;
+
+const Body = styled.div`
+  /* display: flex;
+  flex-direction: row; */
 `
 
 function Dashboard(props) {
@@ -22,19 +28,26 @@ function Dashboard(props) {
   }
 
   return (
-    <div>
-      <Heading>Dashboard</Heading>
-      <form
-        onSubmit={
-          (e) => {
-            e.preventDefault();
-            handleSubmit();
-          }
-        }
-      >
-        <SubmitButton login>Logout</SubmitButton>
-      </form>
-    </div>
+    <Body>
+      <Layout>
+        <Sider>
+          <MainMenu />
+        </Sider>
+        <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
+        {/* <Content style={{ margin: '24px 16px 0' }}> */}
+        {/* <form
+            onSubmit={
+              (e) => {
+                e.preventDefault();
+                handleSubmit();
+              }
+            }
+          >
+            <SubmitButton login>Logout</SubmitButton>
+          </form> */}
+        {/* </Content> */}
+      </Layout>
+    </Body>
   );
 }
 

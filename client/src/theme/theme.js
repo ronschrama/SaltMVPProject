@@ -10,6 +10,7 @@ export default {
       primary: '#F0F0F7',
       dark: '#191824',
       light: '#FFFFFF',
+      link: '#161620',
     },
     text: {
       primary: '#4D4F5C',
@@ -18,6 +19,7 @@ export default {
       dark: '#191824',
       light: '#A3A6B4',
       error: '#FF6565',
+      semiTransparant: 'rgba(77, 79, 92, 0.5)',
     },
     label: {
       primary: '#69E4A6',

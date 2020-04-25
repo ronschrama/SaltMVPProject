@@ -41,7 +41,7 @@ const LoginForm = styled.div`
 `
 const Heading = styled.h2`
   font-size: ${props => props.theme.fonts.h2};
-  color: #B9BABE;
+  color: ${props => props.theme.colors.text.semiTransparant};
 `
 
 function LoginPage() {
