@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import auth from '../services/auth';
+import isAuthenticated from '../services/auth';
 
 
 // eslint-disable-next-line
@@ -13,7 +13,7 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
         // eslint-disable-next-line
         (props) => {
           // eslint-disable-next-line
-          return auth.isAuthenticated() ? <Component {...props} />
+          return isAuthenticated() ? <Component {...props} />
             : (
               <Redirect
                 to={{

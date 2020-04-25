@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import Cookies from 'js-cookie';
+import { useCookies } from 'react-cookie';
 import { withRouter } from 'react-router-dom';
 
 import { Menu, Dropdown, Button } from 'antd';
 import { WechatOutlined, BellOutlined, DownOutlined } from '@ant-design/icons';
 import user from '../../assets/userPhoto.png';
-import auth from '../../services/auth';
 
 const HeaderBackground = styled.div`
   background-color: ${props => props.theme.colors.background.light};
@@ -48,14 +47,11 @@ const username = 'Denis K.';
 
 
 function HeaderComponent(props) {
+  const [cookies, removeCookie] = useCookies(['authToken']);
+
   function handleSubmit() {
-    Cookies.set('authToken', null);
-    // eslint-disable-next-line
-    console.log('The cookie is now: ', Cookies.get('authToken'));
-    auth.logout(() => {
-      // eslint-disable-next-line
-      props.history.push('/');
-    });
+    removeCookie('authToken');
+    props.history.push('/');
   }
 
   const menu = (

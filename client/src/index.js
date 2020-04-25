@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
@@ -14,7 +15,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={Theme}>
-        <BrowserRouter><App /></BrowserRouter>
+        <CookiesProvider>
+          <BrowserRouter><App /></BrowserRouter>
+        </CookiesProvider>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,

@@ -64,7 +64,7 @@ const login = async (ctx) => {
       ctx.set('authtoken', token);
       ctx.cookies.set('authtoken', token);
 
-      ctx.body = { success: { code: 200, message: 'Logged in' } };
+      ctx.body = { success: { code: 200, message: 'Logged in', token } };
     }
   }
 };

@@ -1,23 +1,9 @@
-class Auth {
-  constructor() {
-    this.authenticated = false;
-  }
+import Cookies from 'js-cookie';
 
-  login(cb) {
-    this.authenticated = true;
-    cb();
-  }
+function isAuthenticated() {
+  const authToken = Cookies.get('authToken');
 
-
-  logout(cb) {
-    this.authenticated = true;
-    cb();
-  }
-
-
-  isAuthenticated() {
-    return this.authenticated;
-  }
+  return authToken !== 'undefined';
 }
 
-export default new Auth();
+export default isAuthenticated;
