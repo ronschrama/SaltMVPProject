@@ -1,14 +1,14 @@
-import React from './node_modules/react';
-import styled, { css } from './node_modules/styled-components';
-import { useCookies } from './node_modules/react-cookie';
-import { withRouter } from './node_modules/react-router-dom';
-import { useDispatch } from './node_modules/react-redux';
-import { loggingOut } from '../login/loginSlice';
-import { Menu, Dropdown, Button } from './node_modules/antd';
-import chatIcon from '../../assets/chatIcon.svg';
-import notificationIcon from '../../assets/notification.svg';
-import cheveronDown from '../../assets/cheveronDown.svg';
-import user from '../../assets/userPhoto.png';
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { useCookies } from 'react-cookie';
+import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loggingOut } from '../../login/loginSlice';
+import { Menu, Dropdown, Button } from 'antd';
+import chatIcon from '../../../assets/chatIcon.svg';
+import notificationIcon from '../../../assets/notification.svg';
+import cheveronDown from '../../../assets/cheveronDown.svg';
+import user from '../../../assets/userPhoto.png';
 
 const HeaderBackground = styled.div`
   background-color: ${props => props.theme.colors.background.light};

@@ -1,7 +1,7 @@
-import React from './node_modules/react';
-import styled, { css } from './node_modules/styled-components';
+import React from 'react';
+import styled, { css } from 'styled-components';
 
-import { Button } from './node_modules/antd';
+import { Button } from 'antd';
 
 const MenuItem = styled(Button)`
   display: flex;

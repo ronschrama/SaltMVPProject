@@ -1,14 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import styled from 'styled-components';
 
-import { Layout, Row, Col } from 'antd';
-import MainMenu from '../menu/Menu';
-import Header from '../menu/Header';
-import OverviewTable from '../table/OverviewTable';
-import NotificationsTable from '../table/NotificationsTable';
-import Heading from '../../components/Heading';
-import TableBody from '../table/TableBody'
+import Overview from './overview/Overview';
+import { Layout } from 'antd';
+import MainMenu from '../dashboard/menu/Menu';
+import Header from '../dashboard/menu/Header';
 
 const { Content, Sider } = Layout;
 
@@ -22,7 +18,8 @@ function Dashboard(props) {
       <Layout>
         <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
         <Content style={{ margin: '40px 40px 40px 80px' }}>
-                  </Content>
+          <Overview />
+        </Content>
       </Layout>
     </Layout>
   );

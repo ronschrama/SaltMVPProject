@@ -1,5 +1,11 @@
 import React from 'react'
 
+import { Row, Col } from 'antd';
+import OverviewTable from '../../table/OverviewTable';
+import NotificationsTable from '../../table/NotificationsTable';
+import Heading from '../../../components/Heading';
+import TableBody from '../../table/TableBody';
+
 function Overview() {
   return (
     <div>

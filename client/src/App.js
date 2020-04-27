@@ -10,10 +10,6 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/" component={LoginPage} />
-        <ProtectedRoute path='/dashboard/briefs' component={Briefs} />
-        <ProtectedRoute path='/dashboard/suppliers' component={Suppliers} />
-        <ProtectedRoute path='/dashboard/helpcenter' component={Helpcenter} />
-        <ProtectedRoute path='/dashboard/settings' component={Settings} />
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />
         <ProtectedRoute exact path="*" component={() => '404 NOT FOUND'} />
       </Switch>
