@@ -1,11 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import logo from '../../../assets/logoWhite@2x.png';
 import MenuItem from './MenuItem';
 import { HomeOutlined } from '@ant-design/icons';
@@ -49,12 +45,22 @@ function MenuComponent(props) {
   return (
     <MenuBackground>
       <LogoImage src={logo} />
-      <MenuItem icon={<Icon active src={home} />}>Test</MenuItem>
-      <MenuItem menuactive icon={<HomeOutlined style={{ fontSize: '15px', color: '#A3A0FB', marginRight: '16px' }} />}>Overview</MenuItem>
-      <MenuItem icon={<Icon src={mail} />}>Briefs</MenuItem>
-      <MenuItem icon={<Icon src={barcode} />}>Suppliers</MenuItem>
-      <MenuItem icon={<Icon src={support} />}>Help Center</MenuItem>
-      <MenuItem icon={<Icon src={settings} />}>Settings</MenuItem>
+      {/* <MenuItem icon={<Icon active src={home} />}>Test</MenuItem> */}
+      <Link to="/dashboard" >
+        <MenuItem menuactive icon={<HomeOutlined style={{ fontSize: '15px', color: '#A3A0FB', marginRight: '16px' }} />}>Overview</MenuItem>
+      </Link>
+      <Link to="/dashboard/briefs" >
+        <MenuItem icon={<Icon src={mail} />}>Briefs</MenuItem>
+      </Link>
+      <Link to="/dashboard/suppliers" >
+        <MenuItem icon={<Icon src={barcode} />}>Suppliers</MenuItem>
+      </Link>
+      <Link to="/dashboard/help" >
+        <MenuItem icon={<Icon src={support} />}>Help</MenuItem>
+      </Link>
+      <Link to="/dashboard/settings">
+        <MenuItem icon={<Icon src={settings} />}>Settings</MenuItem>
+      </Link>
     </MenuBackground>
   );
 }

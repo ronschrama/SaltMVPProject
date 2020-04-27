@@ -4,7 +4,7 @@ import { Skeleton } from 'antd';
 function Briefs() {
   return (
     <div>
-      <Skeleton />
+      <h1>This is the Briefs</h1>
     </div>
   )
 }
