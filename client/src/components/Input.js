@@ -28,9 +28,7 @@ function InputComponent(props, login) {
     <StyledInput
       login={login}
       placeholder={props.name}
-      // ref={props.ref}
-      onChange={(e) => props.handleChange(e.target.value)}
-      type={props.type}
+    // ref={props.ref}
     />
   );
 }

@@ -45,17 +45,10 @@ const MenuItem = styled(Button)`
         border-radius: 0px;
       }
   `}
-  
-  ${
-  ({ iconStyle }) =>
-    iconStyle && css` 
-    
-  `}
-  
 `
 
 
-function DefaultButton({ menuactive, icon, children, iconStyle }) {
+function DefaultButton({ menuactive, icon, children }) {
   return (
     <div>
       <MenuItem

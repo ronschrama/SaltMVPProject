@@ -3,15 +3,33 @@ import { withRouter } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { loggingIn } from './loginSlice';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import SubmitButton from '../../components/Button';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Checkbox } from 'antd';
 
-const LoginForm = styled.form`
-  display: flex;
+const LoginForm = styled(Form)`
+  /* display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center; */
+  width: 400px;
+`
+
+const StyledInput = styled(Input)`
+  background-color: ${props => props.theme.colors.background.light};
+  border-radius: 0px;
+  margin-top: 10px;
+  
+  ${({ login }) =>
+    login && css`
+      width: 400px;
+      height: 32px;
+      font-size: ${props => props.theme.fonts.caption};
+      line-height: 24px;
+      color: ${props => props.theme.colors.text.dark};
+      border: 0px;
+      border-bottom: 2px solid ${props => props.theme.colors.link.quartary};
+  `}
 `
 
 function Login(props) {
@@ -46,7 +64,7 @@ function Login(props) {
 
 
   return (
-    <Form
+    <LoginForm
       name="normal_login"
       className="login-form"
       initialValues={{ remember: true }}
@@ -56,7 +74,8 @@ function Login(props) {
         name="email"
         rules={[{ required: true, message: 'Please insert your email!' }]}
       >
-        <Input
+        <StyledInput
+          login
           type="email"
           placeholder="email"
         />
@@ -65,7 +84,8 @@ function Login(props) {
         name="password"
         rules={[{ required: true, message: 'Please insert your Password!' }]}
       >
-        <Input
+        <StyledInput
+          login
           type="password"
           placeholder="Password"
         />
@@ -85,7 +105,7 @@ function Login(props) {
           Log in
         </SubmitButton>
       </Form.Item>
-    </Form>
+    </LoginForm>
   );
 }
 
