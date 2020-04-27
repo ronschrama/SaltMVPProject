@@ -14,70 +14,71 @@ const database = require('../connectors/postgres');
 // Model
 // -----------------------------------------------------------------------------
 const Model = {
-  name: 'Users',
+  name: 'UserAccount',
   errorLevel: 'MUS',
 };
 
 Model.init = async () => {
   log.debug(`Initializing ${Model.name} model`);
 
-  const queryUserTable = {
+  const query = {
     text: `
-      CREATE TABLE IF NOT EXISTS Users (
-        "uuid" TEXT PRIMARY KEY NOT NULL,
-        "email" TEXT NOT NULL UNIQUE,
-        "createAt" TIMESTAMP NOT NULL,
-        "updatedAt" TIMESTAMP NOT NULL
+      CREATE TABLE IF NOT EXISTS UserAccounts (
+        "uuid"          TEXT PRIMARY KEY,
+        "email"         TEXT NOT NULL UNIQUE,
+        "createdAt"     TIMESTAMP NOT NULL,
+        "updatedAt"     TIMESTAMP NOT NULL
       )
-      `,
-  };
-
-  const createdUserTable = await database.query(queryUserTable);
-  if (createdUserTable.error) {
-    log.error(createdUserTable);
-    return createdUserTable;
-  }
-
-  const queryPasswordTable = {
-    text: `
-    CREATE TABLE IF NOT EXISTS UserPasswords (
-      "uuid" PRIMARY KEY REFERENCES Users ("uuid") ON DELETE CASCADE,
-      "passhash" TEXT NOT NULL,
-      "createAt" TIMESTAMP NOT NULL,
-      "updatedAt" TIMESTAMP NOT NULL
-    );
     `,
   };
 
-  const createdPasswordTable = await database.query(queryPasswordTable);
-  if (createdPasswordTable.error) {
-    log.error(createdPasswordTable);
+  const createdUserAccount = await database.query(query);
+  if (createdUserAccount.error) {
+    log.error(createdUserAccount);
+    return createdUserAccount;
   }
-  return createdPasswordTable;
+
+  const queryPasswords = {
+    text: `
+      CREATE TABLE IF NOT EXISTS UserAccountPasswords(
+        "uuid"          TEXT PRIMARY KEY REFERENCES UserAccount s("uuid") ON DELETE CASCADE,
+        "passhash"      TEXT NOT NULL,
+        "createdAt"     TIMESTAMP NOT NULL,
+        "updatedAt"     TIMESTAMP NOT NULL
+      )
+    `,
+  };
+
+  const createdUserAccountPassword = database.query(queryPasswords);
+  if (createdUserAccountPassword.error) {
+    log.error(createdUserAccount);
+  }
+  return createdUserAccountPassword;
 };
 
 Model.create = async ({ email, password } = {}) => {
+  const uuid = uuidv4();
 
   const queryUsers = {
     text: `
-    INSERT INTO Users 
+    INSERT INTO UserAccounts
     (
       "uuid",
-       "email", 
-       "createdAt",
-        "updatedAt"
+      "email", 
+      "createdAt",
+      "updatedAt"
     ) 
     VALUES 
     (
       :uuid,
-       :email, 
-       LOCALTIMESTAMP, 
-       LOCALTIMESTAMP
+      :email, 
+      LOCALTIMESTAMP, 
+      LOCALTIMESTAMP
     )
     RETURNING *
     `,
     values: {
-      uuid: uuidv4(),
+      uuid,
       email,
     },
   };
@@ -87,7 +88,7 @@ Model.create = async ({ email, password } = {}) => {
 
   const queryPassword = {
     text: `
-      INSERT INTO UserPasswords
+      INSERT INTO UserAccountPasswords
       (
         "uuid",
         "passhash",
@@ -132,7 +133,7 @@ Model.getUser = ({ email, password } = {}) => {
   }
   const query = {
     text: `
-    SELECT * FROM Users WHERE TRUE
+    SELECT * FROM UserAccounts WHERE TRUE
     ${email ? 'AND "email" = :email' : ''}
     ${password ? 'AND "password" = :password' : ''}
     `,
@@ -144,16 +145,16 @@ Model.getUser = ({ email, password } = {}) => {
   return database.query(query);
 };
 
-Model.delete = async (uuid) => {
+Model.delete = async (email) => {
   const query = {
     text: `
       DELETE
-      FROM Users
-      WHERE "uuid" = :uuid
+      FROM UserAccounts
+      WHERE "email" = :email
       RETURNING *
     `,
     values: {
-      uuid,
+      email,
     },
   };
   const accountRemoved = await database.query(query);
