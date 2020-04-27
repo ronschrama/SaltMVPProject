@@ -1,9 +1,10 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import { useCookies } from 'react-cookie';
-import { withRouter } from 'react-router-dom';
-
-import { Menu, Dropdown, Button } from 'antd';
+import React from './node_modules/react';
+import styled, { css } from './node_modules/styled-components';
+import { useCookies } from './node_modules/react-cookie';
+import { withRouter } from './node_modules/react-router-dom';
+import { useDispatch } from './node_modules/react-redux';
+import { loggingOut } from '../login/loginSlice';
+import { Menu, Dropdown, Button } from './node_modules/antd';
 import chatIcon from '../../assets/chatIcon.svg';
 import notificationIcon from '../../assets/notification.svg';
 import cheveronDown from '../../assets/cheveronDown.svg';
@@ -57,8 +58,10 @@ const username = 'Denis K.';
 
 function HeaderComponent(props) {
   const [cookies, removeCookie] = useCookies(['authToken']);
+  const dispatch = useDispatch();
 
   function handleSubmit() {
+    dispatch(loggingOut());
     removeCookie('authToken');
     props.history.push('/');
   }

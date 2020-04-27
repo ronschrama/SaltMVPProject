@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { loggingIn } from './loginSlice';
+import { useDispatch } from 'react-redux';
+import { loggingIn } from './loginSlice';
 import styled, { css } from 'styled-components';
 
 import SubmitButton from '../../components/Button';
@@ -33,10 +33,11 @@ const StyledInput = styled(Input)`
 `
 
 function Login(props) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const loginStatus = useSelector(
-  // (state) => state.login.loggedIn,
+  //   (state) => state.login.loggedIn,
   // );
+
   const [cookies, setCookie] = useCookies(['authToken']);
 
   async function handleSubmit(formData) {
@@ -56,7 +57,7 @@ function Login(props) {
 
     if (result.success) {
       const authToken = result.success.token;
-
+      dispatch(loggingIn());
       setCookie('authToken', authToken, { path: '/' });
       props.history.push('/dashboard');
     }

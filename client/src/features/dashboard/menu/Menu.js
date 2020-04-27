@@ -1,9 +1,14 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-
+import React from './node_modules/react';
+import styled, { css } from './node_modules/styled-components';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "./node_modules/react-router-dom";
 import logo from '../../assets/logoWhite@2x.png';
 import MenuItem from './MenuItem';
-import { HomeOutlined } from '@ant-design/icons';
+import { HomeOutlined } from './node_modules/@ant-design/icons';
 import home from '../../assets/home.svg';
 import mail from '../../assets/mail.svg';
 import barcode from '../../assets/barcode.svg';
