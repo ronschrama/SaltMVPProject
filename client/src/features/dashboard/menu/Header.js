@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loggingOut } from '../../login/loginSlice';
+
 import { Menu, Dropdown, Button } from 'antd';
 import chatIcon from '../../../assets/chatIcon.svg';
 import notificationIcon from '../../../assets/notification.svg';
@@ -40,13 +41,13 @@ const Photo = styled.img`
 `
 
 const Icon = styled.img`
-align-self: center;
-width: 16px;
-height: 16px;
-margin-right: 32px;
-margin-left: 10px;
+  align-self: center;
+  width: 16px;
+  height: 16px;
+  margin-right: 32px;
+  margin-left: 10px;
 
-${({ cheveron }) =>
+  ${({ cheveron }) =>
     cheveron && css`
       margin-right: 10px;
       margin-left: 10px;

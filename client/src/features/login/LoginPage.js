@@ -33,7 +33,6 @@ align-self: center;
 const LoginForm = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   background-color: ${props => props.theme.colors.background.light};
   width: 50%; 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-
 import { Link } from "react-router-dom";
+
 import logo from '../../../assets/logoWhite@2x.png';
 import MenuItem from './MenuItem';
 import { HomeOutlined } from '@ant-design/icons';

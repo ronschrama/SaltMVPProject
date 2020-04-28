@@ -1,16 +1,13 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
-import { loggingIn } from './loginSlice';
 import styled, { css } from 'styled-components';
 
+import { loggingIn } from './loginSlice';
 import SubmitButton from '../../components/Button';
 import { Form, Input, Checkbox } from 'antd';
 
 const LoginForm = styled(Form)`
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center; */
   width: 400px;
 `
 
@@ -55,7 +52,6 @@ function Login(props) {
       const authToken = result.success.token;
       setCookie('authToken', authToken, { path: '/' });
       dispatch(loggingIn());
-
     }
   }
 
@@ -73,7 +69,7 @@ function Login(props) {
         <StyledInput
           login
           type="email"
-          placeholder="email"
+          placeholder="Email"
         />
       </Form.Item>
       <Form.Item
@@ -87,18 +83,20 @@ function Login(props) {
         />
       </Form.Item>
       <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
 
-        <a className="login-form-forgot" href="">
-          Forgot password
+          <a className="login-form-forgot" href="">
+            Forgot password
         </a>
+        </div>
       </Form.Item>
 
       <Form.Item>
-        <SubmitButton login htmlType="submit" className="login-form-button">
-          Log in
+        <SubmitButton login type="primary" htmlType="submit" className="login-form-button">
+          Login
         </SubmitButton>
       </Form.Item>
     </LoginForm>

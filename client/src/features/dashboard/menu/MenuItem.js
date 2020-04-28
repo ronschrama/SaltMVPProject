@@ -44,6 +44,14 @@ const MenuItem = styled(Button)`
         padding-left: 24px;
         border-radius: 0px;
       }
+      &:focus {
+        background-color: ${props => props.theme.colors.background.link};
+        font-size: ${props => props.theme.fonts.caption};
+        color: ${props => props.theme.colors.link.tertiary};
+        border-left: 4px solid ${props => props.theme.colors.link.tertiary};
+        padding-left: 24px;
+        border-radius: 0px;
+      }
   `}
 `
 
