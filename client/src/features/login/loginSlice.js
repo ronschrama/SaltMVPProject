@@ -1,20 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useCookies } from 'react-cookie'; 
+import isAuthenticated from '../../services/auth'
 
 const login = createSlice({
   name: 'login',
   initialState: {
-    loggedIn: false,
+    loggedIn: isAuthenticated(),
     userType: null,
-    hasCookie: null
   },
   reducers: {
     loggingIn: (state) => {
-      // if (hasCookie !== null) {
-      //   if (getCookie('authToken') === ?) { 
-      //     state.loggedIn = true;
-      //   }
-      // }
       state.loggedIn = true;
     },
     loggingOut: (state) => {

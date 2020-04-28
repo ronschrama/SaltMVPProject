@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { loggingIn } from './loginSlice';
@@ -56,7 +55,7 @@ function Login(props) {
       const authToken = result.success.token;
       setCookie('authToken', authToken, { path: '/' });
       dispatch(loggingIn());
-      // props.history.push('/dashboard');
+
     }
   }
 
@@ -106,4 +105,4 @@ function Login(props) {
   );
 }
 
-export default withRouter(Login);
+export default Login;

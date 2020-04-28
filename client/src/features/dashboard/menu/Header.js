@@ -57,13 +57,12 @@ const username = 'Denis K.';
 
 
 function HeaderComponent(props) {
-  const [cookies, removeCookie] = useCookies(['authToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
   const dispatch = useDispatch();
 
   function handleSubmit() {
-    dispatch(loggingOut());
     removeCookie('authToken');
-    props.history.push('/');
+    dispatch(loggingOut());
   }
 
   const menu = (
