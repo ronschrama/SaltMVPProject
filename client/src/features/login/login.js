@@ -34,9 +34,7 @@ const StyledInput = styled(Input)`
 
 function Login(props) {
   const dispatch = useDispatch();
-  // const loginStatus = useSelector(
-  //   (state) => state.login.loggedIn,
-  // );
+
 
   const [cookies, setCookie] = useCookies(['authToken']);
 

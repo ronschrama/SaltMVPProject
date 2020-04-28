@@ -62,7 +62,7 @@ const login = async (ctx) => {
       const token = generateToken(user);
 
       ctx.set('authtoken', token);
-      ctx.cookies.set('authtoken', token);
+      ctx.cookies.set('authtoken', token, { path: '/' });
 
       ctx.body = { success: { code: 200, message: 'Logged in', token } };
     }
