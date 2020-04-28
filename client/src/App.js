@@ -1,22 +1,26 @@
 import React from 'react';
 import './App.css';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import LoginPage from './features/login/LoginPage';
 import Dashboard from './features/dashboard/Dashboard';
-import ProtectedRoute from './components/ProtectedRoute';
-import isAuthenticated from './services/auth';
+import { useSelector } from 'react-redux';
+import { selectLoginStatus } from './features/login/loginSlice';
 
 function App() {
+  const isLoggedin = useSelector(selectLoginStatus);
   return (
     <div className="App">
       <BrowserRouter>
-        {isAuthenticated() ? (
-          <h1>I'm logged in</h1>
+        {!isLoggedin ? (
+          <Switch>
+            <Route exact path="/login" component={LoginPage} />
+            <Redirect to="/login" />
+          </Switch>
         ): (
-          <h1>I'm anonymous</h1>
+            <Dashboard />
+            
         ) }
         {/* // <Switch>
-        //   <Route exact path="/" component={LoginPage} />
         //   <ProtectedRoute exact path="/dashboard" component={Dashboard} />
         //   <ProtectedRoute exact path="*" component={() => '404 NOT FOUND'} />
         // </Switch> */}

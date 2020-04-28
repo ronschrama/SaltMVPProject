@@ -2,8 +2,8 @@ import Cookies from 'js-cookie';
 
 function isAuthenticated() {
   const authToken = Cookies.get('authToken');
-
-  return authToken !== 'undefined';
+  console.log(authToken, typeof authToken);
+  return typeof authToken !== 'undefined';
 }
 
 export default isAuthenticated;

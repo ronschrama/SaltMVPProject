@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   withRouter,
-  Switch
+  Switch,
+  Route,
+  Redirect
 } from 'react-router-dom';
 
-import ProtectedRoute from '../../components/ProtectedRoute';
+// import ProtectedRoute from '../../components/ProtectedRoute';
 import Overview from './overview/Overview';
 import Briefs from './briefs/Briefs';
 import Help from './help/Help';
@@ -21,7 +22,6 @@ const { Content, Sider } = Layout;
 function Dashboard(props) {
   return (
     <Layout>
-      <Router>
         <Sider>
           <MainMenu />
         </Sider>
@@ -29,15 +29,15 @@ function Dashboard(props) {
           <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
           <Content style={{ margin: '40px 40px 40px 80px' }}>
             <Switch>
-              <ProtectedRoute exact path="/dashboard" component={Overview} />
-              <ProtectedRoute exact path="/dashboard/briefs" component={Briefs} />
-              <ProtectedRoute exact path="/dashboard/help" component={Help} />
-              <ProtectedRoute exact path="/dashboard/suppliers" component={Suppliers} />
-              <ProtectedRoute exact path="/dashboard/settings" component={Settings} />
+              <Route exact path="/dashboard" component={Overview} />
+              <Route exact path="/dashboard/briefs" component={Briefs} />
+              <Route exact path="/dashboard/help" component={Help} />
+              <Route exact path="/dashboard/suppliers" component={Suppliers} />
+              <Route exact path="/dashboard/settings" component={Settings} />
+              <Redirect to="/dashboard" />
             </Switch>
           </Content>
         </Layout>
-      </Router>
     </Layout>
   );
 }

@@ -35,7 +35,6 @@ const StyledInput = styled(Input)`
 function Login(props) {
   const dispatch = useDispatch();
 
-
   const [cookies, setCookie] = useCookies(['authToken']);
 
   async function handleSubmit(formData) {
@@ -55,12 +54,11 @@ function Login(props) {
 
     if (result.success) {
       const authToken = result.success.token;
-      dispatch(loggingIn());
       setCookie('authToken', authToken, { path: '/' });
-      props.history.push('/dashboard');
+      dispatch(loggingIn());
+      // props.history.push('/dashboard');
     }
   }
-
 
   return (
     <LoginForm

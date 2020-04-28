@@ -1,13 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useCookies } from 'react-cookie'; 
 
 const login = createSlice({
   name: 'login',
   initialState: {
     loggedIn: false,
     userType: null,
+    hasCookie: null
   },
   reducers: {
     loggingIn: (state) => {
+      // if (hasCookie !== null) {
+      //   if (getCookie('authToken') === ?) { 
+      //     state.loggedIn = true;
+      //   }
+      // }
       state.loggedIn = true;
     },
     loggingOut: (state) => {
@@ -35,5 +42,7 @@ export const {
   setUserTypeAdmin,
   setUserTypeSuperAdmin,
 } = login.actions;
+
+export const selectLoginStatus = state => state.login.loggedIn;
 
 export default login.reducer;
