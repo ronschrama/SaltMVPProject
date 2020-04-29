@@ -17,7 +17,7 @@ const cors = require('@koa/cors');
 
 const log = require('./utils/logger')('app', 'INFO');
 
-// const modelsInit = require('./models');
+const modelsInit = require('./models');
 const routes = require('./routes');
 
 // -----------------------------------------------------------------------------
@@ -83,6 +83,7 @@ app.use(async (ctx, next) => {
 // -----------------------------------------------------------------------------
 
 (async () => {
+<<<<<<< HEAD
   // const modelsInitialized = await modelsInit();
   // if (modelsInitialized.error) {
   //   log.error('Error occuried during models initialization, app initialization aborted');
@@ -117,21 +118,57 @@ app.use(async (ctx, next) => {
           code: err.code || '500ASD00',
         });
         process.exitCode = 1;
+=======
+  const modelsInitialized = await modelsInit();
+  if (modelsInitialized.error) {
+    log.error('Error occuried during models initialization, app initialization aborted');
+  } else {
+    // ---------------------------------------------------------------------------
+    // Mount endpoints and init app
+    // ---------------------------------------------------------------------------
+
+    app.use(serve('./public'));
+    app.use(cors());
+    app.use(bodyParser());
+    app.use(json());
+
+    app.use(route.routes());
+    app.use(mount('/', routes));
+
+    const server = app.listen(process.env.PORT || 5000);
+    log.info(`App launched on PORT ${process.env.PORT || 5000}`);
+
+    // ---------------------------------------------------------------------------
+    // Quit handlers
+    // ---------------------------------------------------------------------------
+
+    function shutdown(serverToShutdown) {
+      if (serverToShutdown === undefined || serverToShutdown.close === undefined) {
+        log.error('Server for shutdown is undefined or missing close method');
+>>>>>>> 031e47f0af8b38f24af822f7d086b4ccbd6d76cf
       }
-      process.exit();
+      serverToShutdown.close((err) => {
+        if (err) {
+          log.error({
+            message: err.message || 'Server shutdown error!',
+            code: err.code || '500ASD00',
+          });
+          process.exitCode = 1;
+        }
+        process.exit();
+      });
+    };
+
+    process.on('SIGINT', () => {
+      log.info('SIGINT received, graceful shutdown started');
+      shutdown(server);
+    });
+
+    process.on('SIGTERM', () => {
+      log.info('SIGTERM received, graceful shutdown started');
+      shutdown(server);
     });
   }
-
-  process.on('SIGINT', () => {
-    log.info('SIGINT received, graceful shutdown started');
-    shutdown(server);
-  });
-
-  process.on('SIGTERM', () => {
-    log.info('SIGTERM received, graceful shutdown started');
-    shutdown(server);
-  });
-  // }
 })();
 
 process.on('uncaughtException', (err) => {
