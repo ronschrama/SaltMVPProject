@@ -7,11 +7,12 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 
-const fs = require('fs').promises;
+// const fs = require('fs').promises;
 
 const database = require('./connectors/postgres');
 
 const Events = require('./Events');
+const UserAccounts = require('./UserAccounts');
 
 const log = require('../utils/logger')('models', 'DEBUG');
 
@@ -22,7 +23,7 @@ const log = require('../utils/logger')('models', 'DEBUG');
 const init = async () => {
   const modelsToInit = {
     Events,
-    Users
+    UserAccounts
   };
 
   const databaseCreated = await database.createDatabase();

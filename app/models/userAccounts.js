@@ -6,15 +6,15 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const uuidv4 = require('uuid/v4');
-const bcrypt = require('bcrypt-nodejs');
-const log = require('../../utils/logger')('Users');
-const database = require('../connectors/postgres');
+const bcrypt = require('bcrypt');
+const log = require('../utils/logger')('UserAccounts');
+const database = require('./connectors/postgres');
 
 // -----------------------------------------------------------------------------
 // Model
 // -----------------------------------------------------------------------------
 const Model = {
-  name: 'UserAccount',
+  name: 'UserAccounts',
   errorLevel: 'MUS',
 };
 
@@ -33,6 +33,7 @@ Model.init = async () => {
   };
 
   const createdUserAccount = await database.query(query);
+  console.log(createdUserAccount);
   if (createdUserAccount.error) {
     log.error(createdUserAccount);
     return createdUserAccount;
@@ -41,7 +42,7 @@ Model.init = async () => {
   const queryPasswords = {
     text: `
       CREATE TABLE IF NOT EXISTS UserAccountPasswords(
-        "uuid"          TEXT PRIMARY KEY REFERENCES UserAccount s("uuid") ON DELETE CASCADE,
+        "uuid"          TEXT PRIMARY KEY REFERENCES UserAccounts("uuid") ON DELETE CASCADE,
         "passhash"      TEXT NOT NULL,
         "createdAt"     TIMESTAMP NOT NULL,
         "updatedAt"     TIMESTAMP NOT NULL
@@ -167,3 +168,6 @@ Model.delete = async (email) => {
 
   return accountRemoved;
 };
+
+
+module.exports = Model;
