@@ -35,9 +35,10 @@ services:
       context: ./app
       target: development
     ports:
-      - "3000:3000"
+      - "5000:5000"
     environment:
       - NODE_ENV=development
+      - PGHOST=api.salt.promoresolution.com
     volumes:
       - ./app:/opt/app:delegated
 
