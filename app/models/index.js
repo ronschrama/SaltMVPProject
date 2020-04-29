@@ -12,7 +12,7 @@
 const database = require('./connectors/postgres');
 
 const Events = require('./Events');
-const UserAccounts = require('./UserAccounts');
+const UserAccounts = require('./userAccounts');
 
 const log = require('../utils/logger')('models', 'DEBUG');
 

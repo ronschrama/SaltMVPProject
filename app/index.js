@@ -18,7 +18,7 @@ const cookieMiddleware = require('universal-cookie-koa');
 
 const log = require('./utils/logger')('app', 'INFO');
 
-// const modelsInit = require('./models');
+const modelsInit = require('./models');
 const routes = require('./routes');
 
 // -----------------------------------------------------------------------------
@@ -84,10 +84,10 @@ app.use(async (ctx, next) => {
 // -----------------------------------------------------------------------------
 
 (async () => {
-  // const modelsInitialized = await modelsInit();
-  // if (modelsInitialized.error) {
-  //   log.error('Error occuried during models initialization, app initialization aborted');
-  // } else {
+  const modelsInitialized = await modelsInit();
+  if (modelsInitialized.error) {
+    log.error('Error occuried during models initialization, app initialization aborted');
+  } else {
   // ---------------------------------------------------------------------------
   // Mount endpoints and init app
   // ---------------------------------------------------------------------------
@@ -142,7 +142,7 @@ app.use(async (ctx, next) => {
       shutdown(server);
     });
   }
-  // }
+  }
 })();
 
 process.on('uncaughtException', (err) => {
