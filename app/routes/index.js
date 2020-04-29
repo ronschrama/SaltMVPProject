@@ -18,6 +18,7 @@ const app = new Koa();
 
 
 app.use(mount('/user', require('./user')));
+app.use(mount('/file', require('./file')));
 app.use(mount('/protected', require('./protected')));
 
 module.exports = app;

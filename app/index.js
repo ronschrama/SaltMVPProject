@@ -92,7 +92,7 @@ app.use(async (ctx, next) => {
   // ---------------------------------------------------------------------------
 
   app.use(serve('./public'));
-  app.use(cors());
+  app.use(cors({credentials: true}));
   app.use(bodyParser());
   app.use(json());
 

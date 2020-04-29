@@ -5,6 +5,7 @@ import LoginPage from './features/login/LoginPage';
 import Dashboard from './features/dashboard/Dashboard';
 import { useSelector } from 'react-redux';
 import { selectLoginStatus } from './features/login/loginSlice';
+import Files from './features/files/Files';
 
 function App() {
   const isLoggedin = useSelector(selectLoginStatus);
