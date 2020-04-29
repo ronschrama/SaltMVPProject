@@ -9,7 +9,6 @@
 
 const Koa = require('koa');
 const route = require('koa-router')();
-const { isAuthorized } = require('./utils/login');
 
 // -----------------------------------------------------------------------------
 // Code
@@ -17,7 +16,7 @@ const { isAuthorized } = require('./utils/login');
 
 const app = new Koa();
 
-route.post('/', isAuthorized, async (ctx) => {
+route.post('/', async (ctx) => {
   ctx.body = { data: [{ message: 'Protected route' }] };
 });
 

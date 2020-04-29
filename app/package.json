@@ -32,7 +32,6 @@
     "@koa/multer": "^2.0.2",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
-    "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
