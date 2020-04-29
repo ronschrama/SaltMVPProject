@@ -16,15 +16,8 @@ const MenuItem = styled(Button)`
   border-radius: 0px;
   border: 0px;
 
-  &:hover {
-    background-color: ${props => props.theme.colors.background.link};
-    color: ${props => props.theme.colors.link.tertiary};
-  }
-
-  ${
-  ({ menuactive }) =>
-    menuactive && css`
-      display: flex;
+  &:active {
+    display: flex;
       flex-direction: row;
       align-items: baseline;
       width: 240px;
@@ -35,8 +28,8 @@ const MenuItem = styled(Button)`
       border-left: 4px solid ${props => props.theme.colors.link.tertiary};
       padding-left: 24px;
       border-radius: 0px;
-      
-      &:hover {
+  }
+  &:hover {
         background-color: ${props => props.theme.colors.background.link};
         font-size: ${props => props.theme.fonts.caption};
         color: ${props => props.theme.colors.link.tertiary};
@@ -52,9 +45,7 @@ const MenuItem = styled(Button)`
         padding-left: 24px;
         border-radius: 0px;
       }
-  `}
 `
-
 
 function DefaultButton({ menuactive, icon, children }) {
   return (
