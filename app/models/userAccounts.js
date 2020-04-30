@@ -55,6 +55,26 @@ Model.init = async () => {
     log.error(createdUserAccount);
   }
   return createdUserAccountPassword;
+
+  //  USER PERMISSIONS TABLE
+  // const queryRoles = {
+  //   text: `
+  //     CREATE TABLE IF NOT EXISTS UserAccountRoles(
+  //       "uuid"          TEXT PRIMARY KEY REFERENCES UserAccounts("uuid") ON DELETE CASCADE,
+  //       "role"          INTEGER NOT NULL,
+  //       "createdAt"     TIMESTAMP NOT NULL,
+  //       "updatedAt"     TIMESTAMP NOT NULL
+  //     )
+  //   `,
+  // };
+
+  // const createdUserAccountRoles = database.query(queryRoles);
+  // if (createdUserAccountRoles.error) {
+  //   log.error(createdUserAccount);
+  //   return createdUserAccountRoles;
+  // // }
+
+  // return;
 };
 
 Model.create = async ({ email, password } = {}) => {
