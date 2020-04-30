@@ -9,6 +9,7 @@ const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt');
 const log = require('../utils/logger')('UserAccounts');
 const database = require('./connectors/postgres');
+const validator = require('validator');
 
 // -----------------------------------------------------------------------------
 // Model
@@ -33,7 +34,6 @@ Model.init = async () => {
   };
 
   const createdUserAccount = await database.query(query);
-  console.log(createdUserAccount);
   if (createdUserAccount.error) {
     log.error(createdUserAccount);
     return createdUserAccount;
@@ -59,6 +59,31 @@ Model.init = async () => {
 
 Model.create = async ({ email, password } = {}) => {
   const uuid = uuidv4();
+  const isValidEmail = validator.isEmail(email);
+  if (!isValidEmail) {
+    const message = ` ${email} is not a valid email account`;
+
+    log.info(message);
+
+    return {
+      error: {
+        code: `403${Model.errorLevel}00`,
+        message,
+      }
+    }
+  };
+
+  if (password.length > 15 || password.length < 8) {
+    const message = ` Your password should be between 8 and 15 characters`;
+
+    log.info(message);
+    return {
+      error: {
+        code: `403${Model.errorLevel}00`,
+        message,
+      }
+    }
+  }
 
   const queryUsers = {
     text: `
@@ -111,8 +136,7 @@ Model.create = async ({ email, password } = {}) => {
   };
 
   const createdPassword = await database.query(queryPassword);
-  if (createdPassword.error) return createdPassword;
-
+  // if (createdPassword.error) return createdPassword;
 
   return {
     data: createdUsers.data.map((user) => {
@@ -123,28 +147,41 @@ Model.create = async ({ email, password } = {}) => {
   };
 };
 
-Model.getUser = ({ email, password } = {}) => {
-  if (!email || !password) {
-    return {
-      error: {
-        message: 'You must enter both a valid email and a valid password',
-        code: `400${Model.errorLevel}00`,
-      },
-    };
-  }
-  const query = {
-    text: `
-    SELECT * FROM UserAccounts WHERE TRUE
-    ${email ? 'AND "email" = :email' : ''}
-    ${password ? 'AND "password" = :password' : ''}
-    `,
-    values: {
-      email,
-      password,
+Model.getUser = async (email, password) => {
+let uuid  = await database.query("select uuid from useraccounts where (email = $1)", [email]);
+if(uuid.data.length === 0) {
+  const message = ` There is no user with that email`;
+
+  log.info(message);
+  return {
+    error: {
+      code: `404${Model.errorLevel}00`,
+      message,
     },
   };
-  return database.query(query);
 };
+uuid = uuid.data[0].uuid;
+
+let passhash = await database.query("select passhash from useraccountpasswords where (uuid = $1)", [uuid]);
+passhash = passhash.data[0].passhash;
+
+const isPasswordValid = bcrypt.compareSync(password, passhash);
+
+if (!isPasswordValid) {
+  const message = ` The password is not correct`;
+    
+  log.info(message);
+  return {
+    error: {
+      code: `404${Model.errorLevel}00`,
+      message,
+    },
+  };
+}
+
+return {data: "User authenticated"};
+};
+
 
 Model.delete = async (email) => {
   const query = {
@@ -159,14 +196,26 @@ Model.delete = async (email) => {
     },
   };
   const accountRemoved = await database.query(query);
-
-  if (!accountRemoved.error) {
+  if(accountRemoved.data.length === 0) {
+    const message = `User with ${email} was not found`;
+    
+    log.info(message); 
+    return {
+      error: {
+        code: `404${Model.errorLevel}00`,
+        message,
+      },
+    };
+  } else if (!accountRemoved.error) {
     const message = `User with ${accountRemoved.data[0].email} was removed`;
 
     log.info(message);
+    return {
+      data: message,
+    };
   }
 
-  return accountRemoved;
+  // return accountRemoved;
 };
 
 

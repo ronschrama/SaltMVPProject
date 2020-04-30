@@ -35,7 +35,7 @@ function Login(props) {
 
   async function handleSubmit(formData) {
 
-    let result = await fetch('http://localhost:5000/user/login', {
+    let result = await fetch('http://localhost:5000/login', {
       method: "POST",
       headers: {
         'Content-type': 'application/json'

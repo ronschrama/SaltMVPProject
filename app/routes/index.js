@@ -19,7 +19,7 @@ const fs = require('fs');
 const app = new Koa();
 const publicKey = fs.readFileSync('./jwtkeys/jwt.pub', 'utf8');
 
-app.use(mount('/user', require('./user')));
+app.use(mount('/login', require('./login')));
 
 // Routes under JWT middleware are private
 app.use(jwt({
@@ -27,6 +27,7 @@ app.use(jwt({
   algorithm: 'RS256',
 }));
 
+app.use(mount('/user', require('./user')));
 app.use(mount('/file', require('./file')));
 app.use(mount('/protected', require('./protected')));
 
