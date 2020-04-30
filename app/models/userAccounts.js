@@ -105,7 +105,7 @@ Model.create = async ({ email, password } = {}) => {
     `,
     values: {
       uuid,
-      email,
+      email: email.toLowerCase(),
     },
   };
 
@@ -135,8 +135,7 @@ Model.create = async ({ email, password } = {}) => {
     },
   };
 
-  const createdPassword = await database.query(queryPassword);
-  // if (createdPassword.error) return createdPassword;
+  await database.query(queryPassword);
 
   return {
     data: createdUsers.data.map((user) => {

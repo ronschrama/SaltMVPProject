@@ -28,7 +28,7 @@ function generateToken(user) {
 
 const login = async (ctx) => {
   const { email, password } = ctx.request.body;
-  const account = await userAccounts.getUser(email, password);
+  const account = await userAccounts.getUser(email.toLowerCase(), password);
   if (account.error) {
     ctx.body = account;
     return;
