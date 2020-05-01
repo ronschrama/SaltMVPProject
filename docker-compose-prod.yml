@@ -41,6 +41,20 @@ x-add-stack-network: &add-stack-network
 
 services:
 
+  client:
+    build: 
+      context: ./client
+      target: production
+    labels:
+      - "traefik.enable=true"
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:salt.promoresolution.com'
+    environment:
+      - NODE_ENV=production
+    networks:
+      <<: *add-stack-network
+    <<: *add-local-logging
+
   app:
     build: 
       context: ./app

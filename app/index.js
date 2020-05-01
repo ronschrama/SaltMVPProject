@@ -93,7 +93,7 @@ app.use(async (ctx, next) => {
   // ---------------------------------------------------------------------------
 
   app.use(serve('./public'));
-  app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+  app.use(cors({ origin: 'http://localhost:81', credentials: true }));
   app.use(bodyParser());
   app.use(json());
   app.use(cookieMiddleware());

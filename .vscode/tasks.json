@@ -64,22 +64,14 @@
       "id": "serviceToDeploy",
       "type": "pickString",
       "description": "Select service to deploy",
-      "options": [
-        "app",
-        "postgres",
-        "traefik"
-      ],
+      "options": ["client", "app", "postgres", "traefik"],
       "default": "app"
     },
     {
       "id": "serviceToRunLocally",
       "type": "pickString",
       "description": "Select service to run locally",
-      "options": [
-        "app",
-        "postgres",
-        "pgadmin"
-      ],
+      "options": ["client", "app", "postgres", "pgadmin"],
       "default": "app"
     }
   ]
