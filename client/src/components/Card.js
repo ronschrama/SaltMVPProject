@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
 
 const Body = styled.div`
@@ -7,10 +7,10 @@ const Body = styled.div`
   box-shadow: 0px 2px 6px #0000000A;
 `
 
-function TableBody({ children }) {
+function Card({ children }) {
   return (
     <Body>{children}</Body>
   );
 }
 
-export default TableBody
+export default Card

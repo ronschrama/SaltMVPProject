@@ -20,24 +20,45 @@ const HeaderBackground = styled.div`
   justify-content: flex-end; 
   align-items: center;
   padding: 16px; 
+  position: sticky;
+  top: 0;
+  z-index: 50;
+`
+const DropdownMenu = styled(Menu)`
+  margin-top: 13px;
+  width: 160px;
 `
 
-const DropdownMenu = styled(Button)`
+const MenuButton = styled(Button)`
   display: flex;
   align-items: center;
   height: 38px;
   margin-right: 20px;
   padding-left: 20px;
   border: 0px;
+  border-radius: 0px;
   border-left: 1px solid ${props => props.theme.colors.background.primary};
   box-shadow: 0px 0px 0px;
+  &:hover {
+    border-left: 1px solid ${props => props.theme.colors.background.primary};
+    color: ${props => props.theme.colors.link.tertiary};
+  }
+  &:active {
+    border-left: 1px solid ${props => props.theme.colors.background.primary};
+    color: ${props => props.theme.colors.link.tertiary};
+  }
+  &:focus {
+    border-left: 1px solid ${props => props.theme.colors.background.primary};
+    color: ${props => props.theme.colors.link.tertiary};
+  }
 `
 
 const Photo = styled.img`
-  align-self: center;
+  align-self: flex-start;
   border-radius: 50%;
   width: 38px;
   height: 38px;
+  margin-top: -5px;
 `
 
 const Icon = styled.img`
@@ -67,23 +88,33 @@ function HeaderComponent(props) {
   }
 
   const menu = (
-    <Menu>
+    <DropdownMenu>
+      <Menu.Item>
+        <a target="_self" rel="Profile" href="/profile">
+          Profile
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_self" rel="Messages" href="/messages">
+          Messages
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_self" rel="Documents" href="/documents">
+          Files
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_self" rel="Upload Files" href="/dashboard/files">
+          Upload Files
+        </a>
+      </Menu.Item>
       <Menu.Item>
         <a target="/" onClick={handleSubmit}>
           Logout
         </a>
       </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-          2nd menu item
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-          3rd menu item
-        </a>
-      </Menu.Item>
-    </Menu>
+    </DropdownMenu>
   );
 
   return (
@@ -91,7 +122,7 @@ function HeaderComponent(props) {
       <Icon src={chatIcon} />
       <Icon src={notificationIcon} />
       <Dropdown overlay={menu} placement="bottomRight">
-        <DropdownMenu>{username}<Icon cheveron src={cheveronDown} /><Photo src={user} /></DropdownMenu>
+        <MenuButton>{username}<Icon cheveron src={cheveronDown} /><Photo src={user} /></MenuButton>
       </Dropdown>
     </HeaderBackground>
   );

@@ -1,29 +1,30 @@
-import React from 'react'
+import React from 'react';
 
 import { Row, Col } from 'antd';
-import OverviewTable from '../../table/OverviewTable';
-import NotificationsTable from '../../table/NotificationsTable';
+import OverviewTable from '../../dataFields/OverviewTable';
+import NotificationsTable from '../../dataFields/NotificationsTable';
 import Heading from '../../../components/Heading';
-import TableBody from '../../table/TableBody';
+import AnualSpend from '../../dataFields/AnnualSpend';
+import DepartmentSpend from '../../dataFields/DepartmendSpend';
 
 function Overview() {
   return (
     <div>
       <Heading>Overview</Heading>
-      <Row justify="space-between">
-        <Col className="gutter-row" span={15}>
+      <Row justify="space-between" gutter={[40, 40]}>
+        <Col className="gutter-row" span={16}>
           <OverviewTable />
         </Col>
         <Col className="gutter-row" span={8}>
           <NotificationsTable />
         </Col>
       </Row>
-      <Row justify="space-between" style={{ marginTop: '40px' }}>
-        <Col className="gutter-row" span={15}>
-          <TableBody />
+      <Row gutter={[40, 40]}>
+        <Col className="gutter-row" span={8}>
+          <AnualSpend />
         </Col>
         <Col className="gutter-row" span={8}>
-          <TableBody />
+          <DepartmentSpend />
         </Col>
       </Row>
     </div>

@@ -27,7 +27,7 @@ export default {
       primary: 'rgba(105, 228, 166, 0.2)',
       secondary: 'rgba(255, 202, 131, 0.2)',
       tertiary: 'rgba(255, 114, 133, 0.2)',
-      quartary: 'rgba(240, 240, 247, 0.2)',
+      quartary: 'rgba(240, 240, 247, 1)',
     },
   },
   fonts: {

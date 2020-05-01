@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Row, Col, Skeleton } from 'antd';
+import { Row, Col, Empty } from 'antd';
 import Heading from '../../../components/Heading';
 
 function Briefs() {
@@ -8,10 +8,12 @@ function Briefs() {
     <div>
       <Heading>Briefs</Heading>
       <Row justify="space-between">
-        <Col className="gutter-row" span={20}>
-          <Skeleton avatar paragraph={{ rows: 2 }} />
-          <Skeleton avatar paragraph={{ rows: 2 }} />
-          <Skeleton avatar paragraph={{ rows: 2 }} />
+        <Col className="gutter-row" span={24}>
+          <Empty style={{ backgroundColor: '#F7FAFC', padding: '40px', margin: '0' }}
+            description={
+              <span>
+                Placeholder
+          </span>} />
         </Col>
       </Row>
     </div>

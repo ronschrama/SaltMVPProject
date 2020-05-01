@@ -1,29 +1,31 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { Table, Tag } from 'antd';
+import { Table } from 'antd';
 import Heading from '../../components/Heading';
-import TableBody from './TableBody';
-// import Tag from './Tag';
+import Card from '../../components/Card';
+import Tag from './Tag';
+import Link from '../../components/Link';
 
 const StyledTable = styled(Table)`
 font-size: ${props => props.theme.fonts.base};
+overflow-x: auto;
 `
 
 const columns = [
   {
-    title: 'Name',
+    title: 'NAME',
     dataIndex: 'name',
     key: 'name',
     render: text => <a>{text}</a>,
   },
   {
-    title: 'Territory',
+    title: 'TERRITORY',
     dataIndex: 'territory',
     key: 'territory',
   },
   {
-    title: 'Status',
+    title: 'STATUS',
     key: 'statuses',
     dataIndex: 'statuses',
     render: statuses => (
@@ -31,38 +33,49 @@ const columns = [
         {statuses.map(status => {
           let color = status.length;
           if (status === 'Cancelled') {
-            color = `red`;
+            return (
+              <Tag cancelled>
+                {status}
+              </Tag>
+            );
           }
           if (status === 'Awaiting proposals') {
-            color = `yellow`;
+            return (
+              <Tag awaiting>
+                {status}
+              </Tag>
+            );
           }
           if (status === 'Proposals recieved') {
-            color = `green`;
+            return (
+              <Tag recieved>
+                {status}
+              </Tag>
+            );
           }
           if (status === 'On hold') {
-            color = `grey`;
+            return (
+              <Tag hold>
+                {status}
+              </Tag>
+            );
           }
-          return (
-            <Tag color={color} key={status}>
-              {status.toUpperCase()}
-            </Tag>
-          );
         })}
       </span>
     ),
   },
   {
-    title: 'Created By',
+    title: 'CREATED BY',
     dataIndex: 'createdby',
     key: 'createdby',
   },
   {
-    title: 'Total Budget',
+    title: 'TOTAL BUDGET',
     dataIndex: 'totalBudget',
     key: 'totalBudget',
   },
   {
-    title: 'Data',
+    title: 'DATE',
     dataIndex: 'data',
     key: 'data',
   },
@@ -129,11 +142,15 @@ const data = [
 
 function OverviewTable() {
   return (
-    <TableBody>
-      <Heading tableHeading>Briefs</Heading>
-      <StyledTable columns={columns} dataSource={data} pagination={false} />
-    </TableBody>
+    <Card>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <Heading tableHeading>Briefs</Heading>
+        <a>+ Add new brief</a>
+      </div>
+      <StyledTable columns={columns} dataSource={data} pagination={false} align="center" size="middle" />
+      <Link>Show More</Link>
+    </Card>
   )
 }
 
-export default OverviewTable
+export default OverviewTable;

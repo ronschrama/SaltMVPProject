@@ -5,7 +5,6 @@ import LoginPage from './features/login/LoginPage';
 import Dashboard from './features/dashboard/Dashboard';
 import { useSelector } from 'react-redux';
 import { selectLoginStatus } from './features/login/loginSlice';
-import Files from './features/files/Files';
 
 function App() {
   const isLoggedin = useSelector(selectLoginStatus);
@@ -17,14 +16,9 @@ function App() {
             <Route exact path="/login" component={LoginPage} />
             <Redirect to="/login" />
           </Switch>
-        ): (
+        ) : (
             <Dashboard />
-            
-        ) }
-        {/* // <Switch>
-        //   <ProtectedRoute exact path="/dashboard" component={Dashboard} />
-        //   <ProtectedRoute exact path="*" component={() => '404 NOT FOUND'} />
-        // </Switch> */}
+          )}
       </BrowserRouter>
     </div>
   );

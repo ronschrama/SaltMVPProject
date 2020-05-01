@@ -42,4 +42,4 @@ function DefaultTag({ recieved, awaiting, cancelled, hold, children }) {
   )
 }
 
-export default DefaultTag
+export default DefaultTag;

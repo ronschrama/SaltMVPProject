@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 
 import { loggingIn } from './loginSlice';
 import SubmitButton from '../../components/Button';
-import { Form, Input, Checkbox } from 'antd';
+import { Form, Input, Checkbox, message } from 'antd';
 
 const LoginForm = styled(Form)`
   width: 400px;
@@ -25,8 +25,15 @@ const StyledInput = styled(Input)`
       color: ${props => props.theme.colors.text.dark};
       border: 0px;
       border-bottom: 2px solid ${props => props.theme.colors.link.quartary};
+      &:focus {
+      border: 0px;
+      border-bottom: 2px solid ${props => props.theme.colors.link.quartary};
+    }
   `}
 `
+const error = () => {
+  message.error('Incorrect login credentials');
+};
 
 function Login(props) {
   const dispatch = useDispatch();
@@ -45,9 +52,11 @@ function Login(props) {
         password: formData.password
       })
     });
-
     result = await result.json();
 
+    if (result.error) {
+      error();
+    }
     if (result.success) {
       const authToken = result.success.token;
       setCookie('authToken', authToken, { path: '/' });
@@ -63,6 +72,7 @@ function Login(props) {
       onFinish={handleSubmit}
     >
       <Form.Item
+        style={{ textAlign: 'left' }}
         name="email"
         rules={[{ required: true, message: 'Please insert your email!' }]}
       >
@@ -73,6 +83,7 @@ function Login(props) {
         />
       </Form.Item>
       <Form.Item
+        style={{ textAlign: 'left' }}
         name="password"
         rules={[{ required: true, message: 'Please insert your Password!' }]}
       >

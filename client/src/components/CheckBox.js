@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Checkbox } from 'antd';
 import styled, { css } from 'styled-components';
 
@@ -26,8 +26,6 @@ function DefaultCheckBox({ children }) {
   return (
     <div>
       <StyledCheckbox>{children}</StyledCheckbox>
-      {/* <input id="check" type="checkbox" />
-      <label htmlFor="check">{children}</label> */}
     </div>
   )
 }

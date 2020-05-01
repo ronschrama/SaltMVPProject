@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import 'antd/dist/antd.css';
 import { Layout, Row, Col, Upload, message } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
+import Heading from '../../components/Heading';
 
 const { Content } = Layout;
 const { Dragger } = Upload;
@@ -33,39 +34,20 @@ const uploadProps = {
 function Files() {
 
   return (
-    <Layout>
-      <Content style={{ margin: '80px' }}>
-        <Row justify="space-around" style={{ padding: 50 }}>
-          <Col className="gutter-row" span={14}>
-            <div><h1>Upload a File:</h1></div>
-            <Dragger {...uploadProps} showUploadList={false}>
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload</p>
-              <p className="ant-upload-hint">
-                Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-                band files
-                </p>
-            </Dragger>
-          </Col>
-        </Row>
-        <Row justify="space-between" style={{ padding: 50 }}>
-          <Col className="gutter-row" span={4}>
-            <div>col 1</div>
-          </Col>
-          <Col className="gutter-row" span={4}>
-            <div>Col 2</div>
-          </Col>
-          <Col className="gutter-row" span={4}>
-            <div>col 3</div>
-          </Col>
-          <Col className="gutter-row" span={4}>
-            <div>Col 4</div>
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+    <div>
+      <Heading>Upload files</Heading>
+      <Row justify="space-between">
+        <Col className="gutter-row" span={24}>
+          <Dragger {...uploadProps} showUploadList={false} style={{ padding: '40px' }}>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+          </Dragger>
+        </Col>
+      </Row>
+    </div>
   );
 }
 
